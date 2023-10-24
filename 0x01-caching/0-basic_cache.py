@@ -1,51 +1,21 @@
-#!/usr/bin/env fish
-python3 -m doctest -v (basename (status -f))
-exit
+#!/usr/bin/env python3
+"""Basic caching module.
 """
->>> BasicCache = __import__('0-basic_cache').BasicCache
->>> my_cache = BasicCache()
->>> my_cache.print_cache()
-Current cache:
+from base_caching import BaseCaching
 
->>> my_cache.put("A", "Hello")
->>> my_cache.put("B", "World")
->>> my_cache.put("C", "Holberton")
->>> my_cache.print_cache()
-Current cache:
-A: Hello
-B: World
-C: Holberton
 
->>> print(my_cache.get("A"))
-Hello
+class BasicCache(BaseCaching):
+    """Represents an object that allows storing and
+    retrieving items from a dictionary.
+    """
+    def put(self, key, item):
+        """Adds an item in the cache.
+        """
+        if key is None or item is None:
+            return
+        self.cache_data[key] = item
 
->>> print(my_cache.get("B"))
-World
-
->>> print(my_cache.get("C"))
-Holberton
-
->>> print(my_cache.get("D"))
-None
-
->>> my_cache.print_cache()
-Current cache:
-A: Hello
-B: World
-C: Holberton
-
->>> my_cache.put("D", "School")
->>> my_cache.put("E", "Battery")
->>> my_cache.put("A", "Street")
->>> my_cache.print_cache()
-Current cache:
-A: Street
-B: World
-C: Holberton
-D: School
-E: Battery
-
->>> print(my_cache.get("A"))
-Street
-
-"""
+    def get(self, key):
+        """Retrieves an item by key.
+        """
+        return self.cache_data.get(key, None)
